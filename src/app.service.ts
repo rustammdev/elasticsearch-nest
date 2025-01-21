@@ -43,6 +43,6 @@ export class AppService {
   }
 
   getHello(): string {
-    return 'Hello World 1!';
+    return 'Hello World 2!';
   }
 }
