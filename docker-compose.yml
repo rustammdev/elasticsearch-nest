@@ -1,0 +1,38 @@
+services:
+  elasticsearch-node:
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - MONGO_URI=mongodb://root:admin@mongo:27017/test?authSource=admin
+      - ELASTICSEARCH_NODE=http://elasticsearch:9200
+      - PORT=3000
+    command: npm run start:dev
+  mongo:
+    image: mongo
+    ports:
+      - 27018:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: test
+    volumes:
+      - mongo-data:/data/db
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    networks:
+      - elastic-network
+
+networks:
+  elastic-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
