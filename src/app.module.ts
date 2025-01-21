@@ -13,7 +13,7 @@ import { Product, ProductSchema } from './schemas/product.scheme';
     // Elasticsearch server manzili
     // kerakli module ichida bo'ladi
     ElasticsearchModule.register({
-      node: 'http://localhost:9200',
+      node: process.env.ELASTICSEARCH_NODE,
     }),
   ],
   controllers: [AppController],
